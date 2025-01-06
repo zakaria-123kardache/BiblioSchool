@@ -5,17 +5,17 @@ class Utilisateur {
     PRIVATE $id ; 
     PRIVATE $name ; 
     PRIVATE $photo ; 
-    PRIVATE $role ; 
+    // PRIVATE $role ; 
     PRIVATE $username ; 
     PRIVATE $password ; 
     
 
-    public function __construct($name,$photo,$role,$username,$password)
+    public function __construct($name,$photo,$username,$password)
     {
       
         $this -> name = $name ; 
         $this -> photo = $photo ; 
-        $this -> role = $role ; 
+        // $this -> role = $role ; 
         $this -> username = $username ; 
         $this -> password = $password ; 
     }
@@ -29,10 +29,10 @@ class Utilisateur {
 
         return $this -> photo ;
     }
-    public function getRole (){
+    // public function getRole (){
 
-        return $this -> role ;
-    }
+    //     return $this -> role ;
+    // }
 
     public function getUsername (){
 
@@ -54,9 +54,9 @@ class Utilisateur {
     public function setPhoto ($photo){
         $this -> photo = $photo ;
     }
-    public function setRole ($role){
-        $this -> role = $role ;
-    }
+    // public function setRole ($role){
+    //     $this -> role = $role ;
+    // }
     public function setUsername ($username){
         $this -> username = $username ;
     }

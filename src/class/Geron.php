@@ -7,9 +7,6 @@ require_once('./Reservation.php');
 class Geron extends Utilisateur {
 
 
-    private $reservation = [];
-
-
 
     public function CreatLivre(){
 
@@ -28,10 +25,7 @@ class Geron extends Utilisateur {
         $reservation -> setPropriety("etat","rejected");
     }
 
-    public function addReservation (Reservation $reservation)
-    {
-        $this -> reservation [] = $reservation;
-    }
+   
 
 };
 
