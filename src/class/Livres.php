@@ -15,7 +15,16 @@ class Livres {
 
 
 
-    public function _construct ($id,$Titre,$photo,$auteur,$langue,$anne,$copies,$categore,$tags){
+    public function _construct ($id,$titre,$photo,$auteur,$langue,$anne,$copies,$categore,$tags){
+        $this -> id = $id ;
+        $this -> titre = $titre ;
+        $this -> photo = $photo ;
+        $this -> auteur = $auteur ;
+        $this -> langue = $langue ;
+        $this -> anne = $anne ;
+        $this -> copies = $copies ;
+        $this -> categore = $categore ;
+        $this -> tags = $tags ;
 
     }
 
