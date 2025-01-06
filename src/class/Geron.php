@@ -28,6 +28,11 @@ class Geron extends Utilisateur {
         $reservation -> setPropriety("etat","rejected");
     }
 
+    public function addReservation (Reservation $reservation)
+    {
+        $this -> reservation [] = $reservation;
+    }
+
 };
 
 
