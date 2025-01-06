@@ -10,9 +10,9 @@ class Utilisateur {
     PRIVATE $password ; 
     
 
-    public function __construct($id ,$name,$photo,$role,$username,$password)
+    public function __construct($name,$photo,$role,$username,$password)
     {
-        $this -> id = $id ; 
+      
         $this -> name = $name ; 
         $this -> photo = $photo ; 
         $this -> role = $role ; 
@@ -20,10 +20,7 @@ class Utilisateur {
         $this -> password = $password ; 
     }
 
-    public function getId (){
-
-        return $this -> id ;
-    }
+    
     public function getName (){
 
         return $this -> name ;
@@ -50,9 +47,7 @@ class Utilisateur {
 
 
 
-    public function setId ($id){
-        $this -> id = $id ;
-    }
+   
     public function setName ($name){
         $this -> name = $name ;
     }

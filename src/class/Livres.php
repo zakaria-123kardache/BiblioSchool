@@ -15,8 +15,8 @@ class Livres {
 
 
 
-    public function _construct ($id,$titre,$photo,$auteur,$langue,$anne,$copies,$categore,$tags){
-        $this -> id = $id ;
+    public function _construct ($titre,$photo,$auteur,$langue,$anne,$copies,$categore,$tags){
+        
         $this -> titre = $titre ;
         $this -> photo = $photo ;
         $this -> auteur = $auteur ;
@@ -29,9 +29,7 @@ class Livres {
     }
 
 
-    public function getId (){
-        return $this -> id ;
-    }
+    
     public function getTitre (){
         return $this -> titre ;
     }
@@ -41,7 +39,7 @@ class Livres {
     public function getAuteur (){
         return $this -> auteur ;
     }
-    public function getlangue (){
+    public function getLangue (){
         return $this -> langue ;
     }
     public function getAnne (){
@@ -59,9 +57,7 @@ class Livres {
 
 
 
-    public function setId ($id){
-        $this -> id = $id ; 
-    }
+    
     public function setTitre ($titre){
         $this -> titre = $titre ; 
     }

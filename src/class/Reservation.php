@@ -10,9 +10,9 @@ class Reservation {
     
 
 
-    public function __construct($id,$etat,$livre_name,$time)
+    public function __construct($etat,$livre_name,$time)
     {
-        $this -> id = $id ;
+  
         $this -> etat = $etat ;
         $this -> livre_name = $livre_name ;
         $this -> time = $time ;
