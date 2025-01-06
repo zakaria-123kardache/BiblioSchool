@@ -1,7 +1,7 @@
 <?php
 
 
-class  admin {
+class  admin extends Utilisateur {
     private $role ;
 
     public function __construct($role)
