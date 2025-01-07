@@ -6,34 +6,58 @@ USE BiblioSchool;
 
 CREATE TABLE Utilisateurs (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(100),
-    lastname (100),
-    photo (250),
-    UserName varchar(100), 
-    password varchar(100),
+    -- name VARCHAR(100),
+    photo VARCHAR(250),
+    username VARCHAR(100), 
+    password VARCHAR(100),
+
+    id_role INT ,
+    FOREIGN KEY (id_role) REFERENCES Role(id)
+);
+
+
+CREATE TABLE Role (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL , 
     role ENUM(
         'apprenant',
         'gerant',
         'admin'
     ) DEFAULT 'apprenant'
-);
+)
+
+
+
 
 CREATE TABLE Admin (
+
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(100),
-    lastname (100),
-    photo (250),
-    role ENUM('admin') DEFAULT 'admin'
+    photo VARCHAR(250),
+    username VARCHAR(100), 
+    password VARCHAR(100),
+
+    id_Utilisateurs INT ,
+    FOREIGN KEY (id_Utilisateurs) REFERENCES Utilisateurs(id) ,
+
+    id_Livres INT ,
+    FOREIGN KEY (id_Livres) REFERENCES Livres(id) ,
+
+    id_Reservation INT ,
+    FOREIGN KEY (id_Reservation) REFERENCES Reservation(id) ,
+
+    
 );
 
 
 
 CREATE TABLE apprenant (
+
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(100),
-    lastname (100),
-    photo (250),
-    role ENUM('apprenant') DEFAULT 'apprenant'
+    photo VARCHAR(250),
+    username VARCHAR(100), 
+    password VARCHAR(100),
+    id_Utilisateurs INT ,
+    FOREIGN KEY (id_Utilisateurs) REFERENCES Utilisateurs(id) 
+    -- role ENUM('apprenant') DEFAULT 'apprenant'
 );
     
 CREATE TABLE Reservation (
@@ -45,18 +69,15 @@ CREATE TABLE Reservation (
     ) DEFAULT 'Pending',
     livre_name VARCHAR(200),
     start_time time,
-    finish_time time
+    finish_time time,
+
+    id_apprenant INT ,
+    FOREIGN KEY (id_apprenant) REFERENCES apprenant(id) 
+
+    id_geront INT ,
+    FOREIGN KEY (id_geront) REFERENCES geront(id) 
 );
-CREATE TABLE categories (
-    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(100)
-   
-);
-CREATE TABLE tags (
-    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(100)
-   
-);
+
 
 CREATE TABLE Livres (
 id INT PRIMARY KEY AUTO_INCREMENT NOT NULL ;
@@ -69,21 +90,20 @@ tag VARCHAR(100),
 category VARCHAR(100), 
 copies INT  
 
-id_categorie INT ,
-id_tags INT ,
-FOREIGN KEY (id_categorie) REFERENCES categories(id) ,
-FOREIGN KEY (id_tags) REFERENCES tags(id) 
+id_geront INT ,
+FOREIGN KEY (id_geront) REFERENCES geront(id) 
+
 
 );
 
-CREATE TABLE gerant (
+CREATE TABLE geront (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(100),
-    lastname (100),
-    photo (250),
-    role ENUM('gerant') DEFAULT 'gerant',
-    id_reservation INT ,
-    id_Livres INT ,
-    FOREIGN KEY (id_reservation) REFERENCES Reservation(id) ,
-    FOREIGN KEY (id_Livres) REFERENCES Reservation(id) 
+    username VARCHAR(100), 
+    password VARCHAR(100),
+    photo VARCHAR(250),
+
+    id_Utilisateurs INT ,
+    FOREIGN KEY (id_Utilisateurs) REFERENCES Utilisateurs(id) ,
+    -- role ENUM('gerant') DEFAULT 'gerant'
+
 );

@@ -2,6 +2,7 @@
 
 
 require_once('./Reservation.php');
+require_once('./Utilisateur.php');
 
 
 class Apprennat extends Utilisateur {
@@ -18,7 +19,6 @@ class Apprennat extends Utilisateur {
     {
         $this -> reservation [] = $reservation;
     }
-
 
 }
 

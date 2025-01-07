@@ -5,17 +5,17 @@ class Reservation {
     private $id ; 
     private $etat ; 
     private $livre_name ; 
-    private $time ;
-    
-    
+    private $start_time ;
+    private $finish_time ;
 
-
+    
     public function __construct($etat,$livre_name,$time)
     {
   
         $this -> etat = $etat ;
         $this -> livre_name = $livre_name ;
-        $this -> time = $time ;
+        $this -> start_time = $time ;
+        $this -> finish_time = $time ;
     }
 
     public function getPropriety($ProprietyName){
