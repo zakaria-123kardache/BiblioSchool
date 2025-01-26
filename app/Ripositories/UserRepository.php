@@ -53,41 +53,46 @@ class UserRepository {
         return $stmt->rowCount();
     }
 
-    public function updateUser (Utilisateur $user)
-    {
-        $query = "UPDATE users SET firstname ='"
-        .$user->getFirstname()."',lastname='"
-        .$user->getLastname()."',photo='"
-        .$user->getPhoto()."',Email='"
-        .$user->getEmail()."',password='"
-        .$user->getpassword()."',role_id='"
-        .$user->getRole()->getId() . ";";
+    public function updateUser(Utilisateur $user) {
 
+        $query = "UPDATE users SET firstname = :firstname, lastname = :lastname, photo = :photo, email = :email, password = :password, role_id = :role_id WHERE id = :id";
+    
         $stmt = Connexion::getInstance()->getConnexion()->prepare($query);
+    
+        $stmt->bindParam(':firstname', $user->getFirstname());
+        $stmt->bindParam(':lastname', $user->getLastname());
+        $stmt->bindParam(':photo', $user->getPhoto());
+        $stmt->bindParam(':email', $user->getEmail());
+        $stmt->bindParam(':password', $user->getPassword());
+        $stmt->bindParam(':role_id', $user->getRole()->getId());
+        $stmt->bindParam(':id', $user->getId());
+    
         $stmt->execute();
-
+        
         return $user;
     }
 
 
-    public function findUserById (int $id)
-    {
-        $query = "SELECT * FORM users WHERE id = ".$id;
+    public function findUserById(int $id) {
+
+        $query = "SELECT * FROM users WHERE id = :id";
 
         $stmt = Connexion::getInstance()->getConnexion()->prepare($query);
 
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
-        return $stmt->fetchAll(Utilisateur::class);
 
+        return $stmt->fetchObject(Utilisateur::class);
     }
 
-    public function getAllUsers(): array
-    {
+    public function getAllUsers(): array {
         try {
 
             $query = "SELECT * FROM users";
 
-            $stmt = Connexion::getInstance()->getConnexion()->query($query);
+            $stmt = Connexion::getInstance()->getConnexion()->prepare($query);
+            $stmt->execute();
+
             return $stmt->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
 
         } catch (PDOException $e) {
