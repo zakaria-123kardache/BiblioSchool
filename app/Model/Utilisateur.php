@@ -1,5 +1,10 @@
 <?php
 
+
+namespace app\Model;
+
+use Role;
+
 class Utilisateur {
 
     private int $id; 
