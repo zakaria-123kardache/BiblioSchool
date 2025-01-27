@@ -8,6 +8,7 @@ class Livre
     private string $titre;
     private string $auteur;
     private string $isbn;
+    private string $photo;
     private string $langue;
     private int $annePublication;
     private int $dureePret;
@@ -54,6 +55,10 @@ class Livre
     {
         return $this->isbn;
     }
+    public function getPhoto(): string
+    {
+        return $this->photo;
+    }
     public function getLangue(): string
     {
         return $this->langue;
@@ -97,6 +102,11 @@ class Livre
     {
        
         $this->titre = $titre;
+    }
+    public function setPhoto(string $photo): void
+    {
+       
+        $this->photo = $photo;
     }
 
     public function setAuteur(string $auteur): void
