@@ -3,7 +3,7 @@
 namespace app\Factory;
 
 use app\Model\Utilisateur;
-use Role;
+use app\Model\Role;
 
 class UserFactory {
 
@@ -11,6 +11,5 @@ class UserFactory {
     {
         return new Utilisateur($firstname , $lastname, $email , $password , $role);
     } 
-
 
 }

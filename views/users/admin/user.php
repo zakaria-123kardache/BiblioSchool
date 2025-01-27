@@ -1,5 +1,30 @@
 <?php
 
+use app\controller\UserController;
+use app\Repository\UserRepository;
+use app\Core\Connexion;
+
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+
+$db = Connexion::getInstance()->getConnexion();
+
+$userRepository = new UserRepository($db);
+$controller = new UserController($userRepository);
+
+$users = $controller->getAllUsers();
+
+if (isset($_POST['submit'])) {
+  $controller->addUser();
+}
+
+if (isset($_POST['delete']) && isset($_POST['id'])) {
+  // $controller = new UserController();
+  $controller->deleteUser((int)$_POST['id']);
+}
+
+
+
 
 
 
@@ -10,29 +35,29 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biblioschool</title>
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioschool</title>
+  <link rel="stylesheet" href="./style.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
-    <!-- Dashboard -->
-    <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
-        <!-- Vertical Navbar -->
-        <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
-            <div class="container-fluid">
-                <!-- Toggler -->
-                <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Brand -->
-                <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-                    <h3 class="text-success"><img src="./img/youdemy-logo.png" width="40"><span class="text-info">Biblio</span>School</h3>
-                </a>
+  <!-- Dashboard -->
+  <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
+    <!-- Vertical Navbar -->
+    <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
+      <div class="container-fluid">
+        <!-- Toggler -->
+        <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Brand -->
+        <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
+          <h3 class="text-success"><img src="./img/youdemy-logo.png" width="40"><span class="text-info">Biblio</span>School</h3>
+        </a>
         <!-- User menu (mobile) -->
 
         <!-- Collapse -->
@@ -62,8 +87,8 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="./cours.php">
-                <i class="bi bi-file-text"></i> Cours
+              <a class="nav-link" aria-current="page" href="./livre.php">
+                <i class="bi bi-file-text"></i> Livre
               </a>
             </li>
 
@@ -181,94 +206,84 @@
                   </tr>
                 </thead>
                 <tbody>
-                <tr>
+
+
+                  <?php foreach ($users as $user): ?>
+                    <tr>
                       <td>
-                        <a class="text-heading font-semibold" href="#"> 1 </a>
+                        <a class="text-heading font-semibold" href="#"> <?= $user->getId(); ?> </a>
                       </td>
 
                       <td>
                         <img
                           alt="..."
-                          src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
-                          class="avatar avatar-sm rounded-circle me-2"
-                        />
+                          src="<?= $user->getPhoto(); ?>"
+                          class="avatar avatar-sm rounded-circle me-2" />
                       </td>
 
                       <td>
-                        <a class="text-heading font-semibold"> zakaria </a>
+                        <a class="text-heading font-semibold"> <?= $user->getFirstname(); ?> </a>
                       </td>
 
                       <td>
-                        <a class="text-heading font-semibold"> Kardache </a>
+                        <a class="text-heading font-semibold"> <?= $user->getLastname(); ?> </a>
                       </td>
 
                       <td>
                         <a class="text-heading font-semibold">
-                          kardash@mail.com
+                          <?= $user->getEmail(); ?>
                         </a>
                       </td>
 
                       <td>
                         <a class="text-heading font-semibold">
-                          kardashpassword
+                          <?= $user->getPassword(); ?>
                         </a>
                       </td>
-                      <td>
-                        <a class="text-heading font-semibold"> admin </a>
-                      </td>
 
-                      <!-- <td>
-                        <span class="badge badge-lg badge-dot">
-                          <i class="bg-success"></i>Active
-                        </span>
-                      </td> -->
+                      <td>
+                        <a class="text-heading font-semibold">
+                          <?= $user->getRole() ? $user->getRole()->getRoleName() : 'No Role'; ?>
+                        </a>
+                      </td>
 
                       <td class="px-4 py-3 text-xs">
                         <span
-                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
-                        Active
+                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                          Active
                         </span>
                       </td>
 
                       <td class="text-end">
+
+
                         <a
-                          href="#"
+                          href="user.php?edit_user_id=<?= $user->getId() ?>"
                           class="btn d-inline-flex btn-sm btn-warning mx-1"
-                          data-bs-toggle="modal" data-bs-target="#edituserModal"
-                        >
+                          data-bs-toggle="modal"
+                          data-bs-target="#edituserModal">
                           <span class="pe-2">
                             <i class="bi bi-pencil"></i>
                           </span>
                           Edit
                         </a>
-                        <a>
 
+
+
+
+
+                        <form method="POST" action="user.php" style="display: inline;">
+                          <input type="hidden" name="id" value="<?= $user->getId() ?>">
                           <button
-                            type="button"
-                            onclick="showSweetAlert()"
-                            class="btn d-inline-flex btn-sm btn-danger mx-1"
-                          >
-                            <i class="bi bi-trash"></i></button
-
-                        ></a>
-                        <!-- <button type="button" onclick="showSweetAlert()" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                            <i class="bi bi-trash"></i>
-                                        </button> -->
+                            type="submit"
+                            name="delete"
+                            class="btn d-inline-flex btn-sm btn-danger mx-1">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </form>
                       </td>
                     </tr>
-
-
-                  
-
-
-
-
-
-
-
-
-
+                  <?php endforeach; ?>
 
 
                 </tbody>
@@ -276,7 +291,7 @@
             </div>
 
 
-          
+
 
 
           </div>
@@ -299,7 +314,7 @@
         </div>
         <div class="modal-body">
 
-          <form method="POST" action="../../public/admin/user.php">
+          <form method="POST" action="user.php" enctype="multipart/form-data">
             <div class="mb-3">
               <label for="firstname" class="form-label">Firstname</label>
               <input type="text" class="form-control" name="firstname">
@@ -315,28 +330,26 @@
               <input type="email" class="form-control" name="email">
             </div>
 
+
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control" name="password">
             </div>
 
             <div class="mb-3">
-              <label>Photo</label>
-              <input type="file" name="photo" class="form-control">
+              <label for="photo" class="form-label">Photo</label>
+              <input type="text" name="photo" class="form-control">
             </div>
 
 
             <select class="form-select" id="role" name="role">
               <option value="">Select Role</option>
               <option value="1">Admin</option>
-              <option value="2" selected>Etudiant</option>
-              <option value="3">Enseignant</option>
+              <option value="2" selected>Apprenant</option>
+              <option value="3">Geront</option>
             </select>
 
-
-
-
-            <button type="submit" class="btn btn-primary">submit</button>
+            <button type="submit" name="submit" class="btn btn-primary">submit</button>
           </form>
         </div>
         <div class="modal-footer">
@@ -359,37 +372,38 @@
         </div>
         <div class="modal-body">
 
-          <form method="POST" action="user.php">
+          <form method="POST" action="user.php" enctype="multipart/form-data">
             <input type="hidden" name="id" id="edit-id">
             <div class="mb-3">
-              <label for="firstname" class="form-label">Firstname</label>
-              <input type="text" class="form-control" id="edit-firstname" name="firstname">
+              <label for="edit-firstname" class="form-label">Firstname</label>
+              <input type="text" class="form-control" id="edit-firstname" name="edit-firstname">
             </div>
             <div class="mb-3">
-              <label for="lastname" class="form-label">Lastname</label>
-              <input type="text" class="form-control" id="edit-lastname" name="lastname">
+              <label for="edit-lastname" class="form-label">Lastname</label>
+              <input type="text" class="form-control" id="edit-lastname" name="edit-lastname">
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="edit-email" name="email" required>
+              <label for="edit-email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="edit-email" name="edit-email" required>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="edit-password" name="password">
+              <input type="password" class="form-control" id="edit-password" name="edit-password">
             </div>
             <div class="mb-3">
-              <label>Photo</label>
-              <input type="file" id="edit-photo" class="form-control" name="photo">
+              <label for="edit-photo" class="form-label">photo</label>
+              <input type="text" id="edit-photo" class="form-control" name="edit-photo">
             </div>
             <div class="mb-3">
-              <label for="role" class="form-label">Role</label>
-              <select class="form-select" id="edit-role" name="role">
+              <label for="edit-role" class="form-label">Role</label>
+              <select class="form-select" id="role" name="edit-role">
+                <option value="">Select Role</option>
                 <option value="1">Admin</option>
-                <option value="2">Etudiant</option>
-                <option value="3">Enseignant</option>
+                <option value="2" selected>Apprenant</option>
+                <option value="3">Geront</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary" name="update_user">Submit</button>
+            <button type="submit" class="btn btn-primary" name="update_user">Save</button>
           </form>
 
         </div>

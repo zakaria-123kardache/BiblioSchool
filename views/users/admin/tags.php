@@ -64,8 +64,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="./cours.php">
-                            <i class="bi bi-file-text"></i> Cours
+                        <a class="nav-link " aria-current="page" href="./livre.php">
+                            <i class="bi bi-file-text"></i> Livres
                             
                         </a>
                     </li>

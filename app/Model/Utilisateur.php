@@ -3,7 +3,7 @@
 
 namespace app\Model;
 
-use Role;
+use app\Model\Role;
 
 class Utilisateur {
 

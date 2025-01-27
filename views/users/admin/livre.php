@@ -61,8 +61,8 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active text-warning" aria-current="page" href="./cours.php">
-                <i class="bi bi-file-text"></i> Cours
+              <a class="nav-link active text-warning" aria-current="page" href="./livre.php">
+                <i class="bi bi-file-text"></i> Livre
 
               </a>
             </li>
@@ -235,6 +235,12 @@
               <?php endforeach; ?>
 
 
+              
+
+
+              
+
+
 
             </div>
 
@@ -242,6 +248,10 @@
           </div>
         </div>
       </section>
+
+      <!--  -->
+
+      
 
 
 

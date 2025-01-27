@@ -2,30 +2,29 @@
 
 namespace app\Repository;
 
-
-
 use app\Core\Connexion;
+use app\Model\Utilisateur;
 use PDO;
 use PDOException;
-use app\Model\Utilisateur;
 
-class UserRepository {
+class UserRepository
+{
 
-    public function createUser (Utilisateur $user): Utilisateur
+    public function createUser(Utilisateur $user): Utilisateur
     {
-        $query = "INSERT INTO users(firstname, lastname , photo ,email ,  password , role_id)
-        VALUES (:firstname, :lastname, :photo, :email, :password, :role_id)";
+        $query = "INSERT INTO users(firstname, lastname, photo, email, password, role_id)
+                  VALUES (:firstname, :lastname, :photo, :email, :password, :role_id)";
 
         $stmt = Connexion::getInstance()->getConnexion()->prepare($query);
 
-        $firstname =$user->getFirstname();
+
+        $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
         $photo = $user->getPhoto();
         $email = $user->getEmail();
         $password = $user->getPassword();
-        $role_id =$user->getRole()->getId();
+        $role_id = $user->getRole()->getId();
 
-        $stmt->bindParam(':firstname', $firstname);
         $stmt->bindParam(':firstname', $firstname);
         $stmt->bindParam(':lastname', $lastname);
         $stmt->bindParam(':photo', $photo);
@@ -36,29 +35,31 @@ class UserRepository {
         $stmt->execute();
         $user->setId(Connexion::getInstance()->getConnexion()->lastInsertId());
 
-        return $user ; 
-
+        return $user;
     }
 
 
-    public function deletUser(int $id):int 
+    public function deletUser(int $id): int
     {
-        $query = "DELETE FROM users WHERE id :id";
+        $query = "DELETE FROM users WHERE id =:id";
 
         $stmt = Connexion::getInstance()->getConnexion()->prepare($query);
 
-        $stmt->bindParam(':id',$id);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
         return $stmt->rowCount();
     }
 
-    public function updateUser(Utilisateur $user) {
+    public function updateUser(Utilisateur $user)
+    {
+        $query = "UPDATE users 
+              SET firstname = :firstname, lastname = :lastname, photo = :photo, 
+                  email = :email, password = :password, role_id = :role_id 
+              WHERE id = :id";
 
-        $query = "UPDATE users SET firstname = :firstname, lastname = :lastname, photo = :photo, email = :email, password = :password, role_id = :role_id WHERE id = :id";
-    
         $stmt = Connexion::getInstance()->getConnexion()->prepare($query);
-    
+
         $stmt->bindParam(':firstname', $user->getFirstname());
         $stmt->bindParam(':lastname', $user->getLastname());
         $stmt->bindParam(':photo', $user->getPhoto());
@@ -66,14 +67,16 @@ class UserRepository {
         $stmt->bindParam(':password', $user->getPassword());
         $stmt->bindParam(':role_id', $user->getRole()->getId());
         $stmt->bindParam(':id', $user->getId());
-    
+
         $stmt->execute();
-        
-        return $user;
+
+        return $stmt->rowCount();
     }
 
 
-    public function findUserById(int $id) {
+
+    public function findUserById(int $id)
+    {
 
         $query = "SELECT * FROM users WHERE id = :id";
 
@@ -85,7 +88,8 @@ class UserRepository {
         return $stmt->fetchObject(Utilisateur::class);
     }
 
-    public function getAllUsers(): array {
+    public function getAllUsers(): array
+    {
         try {
 
             $query = "SELECT * FROM users";
@@ -94,42 +98,10 @@ class UserRepository {
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_CLASS, Utilisateur::class);
-
         } catch (PDOException $e) {
 
             error_log("Database error: " . $e->getMessage());
             return [];
         }
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

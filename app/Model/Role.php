@@ -1,27 +1,26 @@
 <?php
 
+namespace app\Model;
 
-class Role {
 
-    private int $id ; 
-    private string $roleName ; 
-    private string $roleLogo ; 
+class Role
+{
+
+    private int $id;
+    private string $roleName;
+    private string $roleLogo;
 
 
     public function __construct()
     {
-        
+        $this->roleName = "";
+        $this->roleLogo = "";
     }
 
 
-    public static function instance (string $roleName , string $roleLogo )
-
+    public static function instance(string $roleName, string $roleLogo): self
     {
-        $instance = new self();
-        $instance->roleName = $roleName;
-        $instance->roleLogo = $roleLogo;
-        
-
+        $instance = new self($roleName, $roleLogo);
         return $instance;
     }
 
@@ -31,15 +30,15 @@ class Role {
     }
     public function getRoleName()
     {
-        return $this->roleName ; 
+        return $this->roleName;
     }
     public function getRoleLogo()
     {
-        return $this->roleLogo ; 
+        return $this->roleLogo;
     }
     public function setId($id)
     {
-        $this->id = $id; 
+        $this->id = $id;
     }
     public function setRoleName($roleName)
     {
@@ -50,8 +49,5 @@ class Role {
         $this->roleLogo = $roleLogo;
     }
 
-    public function __toString()
-    {
-        
-    }
+    public function __toString() {}
 }
