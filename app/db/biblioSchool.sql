@@ -37,13 +37,16 @@ CREATE TABLE Livres (
     titre VARCHAR(255) ,
     auteur VARCHAR(100) ,
     isbn VARCHAR(13)  UNIQUE, 
+    photo VARCHAR(500)  , 
+    contenu TEXT  , 
+    description TEXT  , 
     langue VARCHAR(50) ,
     annee_publication INT ,
     duree_pret INT , 
     copies_disponibles INT ,
 
     categorie_id INT ,
-    FOREIGN KEY (categorie_id) REFERENCES categories(id) ON DELETE CASCADE
+    FOREIGN KEY (categorie_id) REFERENCES categories(id) 
 );
 
 CREATE TABLE Livres_tags (

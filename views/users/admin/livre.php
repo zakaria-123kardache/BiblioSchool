@@ -1,37 +1,54 @@
 <?php
 
+use app\Core\Connexion;
+use app\Repository\LivreRepository;
+use app\controller\LivreController;
+
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+$db = Connexion::getInstance()->getConnexion();
+
+$livreRepository = new LivreRepository($db);
+$controller = new LivreController($livreRepository);
+
+if (isset($_POST['submit'])) {
+  $controller->addLivre();
+}
 
 
+$livre = [];
 
+$livres = $livreRepository->getAllLivres();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biblioschool</title>
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioschool</title>
+  <link rel="stylesheet" href="./style.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
-    <!-- Dashboard -->
-    <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
-        <!-- Vertical Navbar -->
-        <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
-            <div class="container-fluid">
-                <!-- Toggler -->
-                <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Brand -->
-                <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
-                    <h3 class="text-success"><img src="./img/youdemy-logo.png" width="40"><span class="text-info">Biblio</span>School</h3>
-                </a>
+  <!-- Dashboard -->
+  <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
+    <!-- Vertical Navbar -->
+    <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
+      <div class="container-fluid">
+        <!-- Toggler -->
+        <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Brand -->
+        <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
+          <h3 class="text-success"><img src="./img/youdemy-logo.png" width="40"><span class="text-info">Biblio</span>School</h3>
+        </a>
         <!-- User menu (mobile) -->
 
         <!-- Collapse -->
@@ -169,76 +186,62 @@
 
             <div class="row justify-content-start">
 
-              <?php foreach ($cours as $cour): ?>
-                <div class="col-md-4 p-5">
-                  <div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative">
-                    <span class="badge bg-danger">New</span>
-                    <div class="overflow-hidden">
-                      <img src="<?= $cour->getPhoto(); ?>" class="product-image w-100" alt="Product">
+            <?php foreach ($livres as $livre): ?>
+    <div class="col-md-4 p-5">
+        <div class="product-card bg-white rounded-4 shadow-sm h-100 position-relative">
+            <span class="badge bg-danger">New</span>
+            <div class="overflow-hidden">
+                <img src="<?= $livre->getPhoto(); ?>" class="product-image w-100" alt="Product">
+            </div>
+            <div class="p-4">
+                <h5 class="fw-bold mb-3"><?= $livre->getTitre(); ?></h5>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="me-2">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star-half-alt text-warning"></i>
                     </div>
-                    <div class="p-4">
-                      <h5 class="fw-bold mb-3"><?= $cour->getName(); ?></h5>
-                      <div class="d-flex align-items-center mb-3">
-                        <div class="me-2">
-                          <i class="fas fa-star text-warning"></i>
-                          <i class="fas fa-star text-warning"></i>
-                          <i class="fas fa-star text-warning"></i>
-                          <i class="fas fa-star text-warning"></i>
-                          <i class="fas fa-star-half-alt text-warning"></i>
-                        </div>
-
-
-                        <div>
-
-
-                          <td>
+                    <div>
+                        <td>
                             <img
-                              alt="..."
-                              src="https://ultahost.com/blog/wp-content/uploads/2023/02/Best-Web-Servers-for-PHP-Development-1024x577.png"
-                              class="avatar avatar-sm rounded-circle me-2" />
-                          </td>
-
-                          <td>
-                            <a class="text-heading font-semibold"> Teacher </a>
-                          </td>
-
-                        </div>
-
-
-                      </div>
-                      <p class="text-muted mb-4"><?= $cour->getContenu(); ?></p>
-
-                      <div class="d-flex justify-content-between align-items-center">
-
-                        <a
-                          href="#"
-                          class="btn d-inline-flex btn-sm btn-warning mx-1"
-                          data-bs-toggle="modal" data-bs-target="#editCourseModal">
-                          <span class="pe-2">
-                            <i class="bi bi-pencil"></i>
-                          </span>
-                          Edit
-                        </a>
-
-                        <a href="cours.php?delete_id=<?= $cour->getId(); ?>" >
-                          <button type="button" class="btn d-inline-flex btn-sm btn-danger mx-1">
-                            <i class="bi bi-trash"></i>
-                          </button>
-                        </a>
-
-                      </div>
-
-
+                                alt="..."
+                                src="https://ultahost.com/blog/wp-content/uploads/2023/02/Best-Web-Servers-for-PHP-Development-1024x577.png"
+                                class="avatar avatar-sm rounded-circle me-2" />
+                        </td>
+                        <td>
+                            <a class="text-heading font-semibold"> <?= $livre->getAuteur(); ?></a>
+                        </td>
                     </div>
-                  </div>
                 </div>
-              <?php endforeach; ?>
+                <p class="text-muted mb-4"><?= $livre->getContenu(); ?></p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a
+                        href="#"
+                        class="btn d-inline-flex btn-sm btn-warning mx-1"
+                        data-bs-toggle="modal" data-bs-target="#editCourseModal">
+                        <span class="pe-2">
+                            <i class="bi bi-pencil"></i>
+                        </span>
+                        Edit
+                    </a>
+                    <a href="cours.php?delete_id=<?= $livre->getId(); ?>">
+                        <button type="button" class="btn d-inline-flex btn-sm btn-danger mx-1">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
 
 
-              
 
 
-              
+
+
 
 
 
@@ -251,7 +254,7 @@
 
       <!--  -->
 
-      
+
 
 
 
@@ -266,7 +269,7 @@
 
 
 
-  <!-- start Modal creat cours  -->
+  <!-- start Modal creat Livres  -->
 
 
   <div class="modal fade" id="creatcourModal" tabindex="-1" aria-labelledby="creatcourModalLabel" aria-hidden="true">
@@ -277,36 +280,60 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form method="POST" action="" enctype="multipart/form-data">
+          <form method="POST" action="livre.php" enctype="multipart/form-data">
             <div class="mb-3">
-              <label for="coursname" class="form-label">cours name</label>
-              <input type="text" class="form-control" name="coursname" id="name" required>
+              <label for="titre" class="form-label">cours name</label>
+              <input type="text" class="form-control" name="titre" id="titre" required>
+            </div>
+            <div class="mb-3">
+              <label for="auteur" class="form-label">auteur</label>
+              <input type="text" class="form-control" name="auteur" id="auteur" required>
             </div>
 
             <div class="mb-3">
-              <label for="courdescription" class="form-label">description</label>
-              <input type="text" name="courdescription" class="form-control" id="courdescription" required>
+              <label for="description" class="form-label">description</label>
+              <input type="text" name="description" class="form-control" id="description" required>
             </div>
 
             <div class="mb-3">
-              <label for="courcontenu" class="form-label">contenu</label>
-              <input type="text" name="courcontenu" class="form-control" id="courcontenu" required>
+              <label for="contenu" class="form-label">contenu</label>
+              <input type="text" name="contenu" class="form-control" id="contenu" required>
             </div>
 
             <div class="mb-3">
-              <label>Photo</label>
-              <input type="file" name="courphoto" id="CRedit-photo" class="form-control">
+              <label for="photo" class="form-label">Photo</label>
+              <input type="text" name="photo" id="CRedit-photo" class="form-control" placeholder="photo url">
+            </div>
+            <div class="mb-3">
+              <label for="langue" class="form-label">langue</label>
+              <input type="text" name="langue" id="CRedit-photo" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="isbn" class="form-label">isbn</label>
+              <input type="number" name="isbn" id="CRedit-photo" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="duree_pret" class="form-label">duree_pret</label>
+              <input type="number" name="duree_pret" id="CRedit-photo" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="annePublication" class="form-label">annePublication</label>
+              <input type="number" name="annePublication" id="CRedit-photo" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="copiesDisponibles" class="form-label">copiesDisponibles</label>
+              <input type="number" name="copiesDisponibles" id="CRedit-photo" class="form-control">
             </div>
 
             <div class="mb-3">
-              <select class="form-select" name="courcategorie" required>
-                <option value="">select categorie </option>
+              <select class="form-select" name="categorie_id" required>
+                <option value="">Select category</option>
                 <option value="1">Mathimatik</option>
-                <option value="2">informatique</option>
+                <option value="2">Informatique</option>
               </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">submit</button>
+            <button type="submit" name="submit" class="btn btn-primary">submit</button>
           </form>
         </div>
         <div class="modal-footer">

@@ -1,5 +1,7 @@
 <?php
 
+namespace app\Model;
+
 
 class Tag extends Tagcategorie {
 
