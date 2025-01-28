@@ -3,26 +3,26 @@
 use app\Config\Database;
 
 
-class Repository 
+class Repository
 {
 
-    protected $db ; 
-    protected $table ;
-    
-    public function __contruct($tableName )
+    protected $db;
+    protected $table;
+
+    public function __contruct($tableName)
     {
-        $this->table =$tableName ; 
-        $this->db =Database::getInstance()->getPdo();
+        $this->table = $tableName;
+        $this->db = Database::getInstance()->getPdo();
     }
 
-    public function getTableName ()
+    public function getTableName()
     {
-        return $this->table; 
+        return $this->table;
     }
 
-    public function all( )
+    public function all()
     {
-        $tableName =$this->getTableName();
+        $tableName = $this->getTableName();
         $stmt = $this->db->query("SELECT*FROM $tableName");
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -45,7 +45,7 @@ class Repository
     public function update($id, $data)
     {
         $setValues = '';
-        foreach ($data as $key ) {
+        foreach ($data as $key) {
             $setValues .= "$key=:$key, ";
         }
         $setValues = rtrim($setValues, ', ');
@@ -60,20 +60,49 @@ class Repository
         $stmt->execute(['id' => $id]);
         return $stmt->rowCount();
     }
+
+
+
+    // relanship methods 
+
+
+    public function hasMany($relatedModel, $foreign_key, $id)
+    {
+        $relatedTableName = (new $relatedModel())->getTableName();
+
+        $query = "SELECT * FROM $relatedTableName WHERE $foreign_key = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function belongsTo($relatedModel, $foreign_key, $id)
+    {
+        $relatedModelInstance = new $relatedModel();
+        $relatedTableName = $relatedModelInstance->getTableName();
+
+        $query = "SELECT * FROM $relatedTableName WHERE id = (SELECT $foreign_key FROM $this->table WHERE id = :id)";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['id' => $id]);
+
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+    }
     
+    public function belongsToMany($relatedModel, $pivotTable, $foreignPivotKey, $relatedPivotKey, $id)
+    {
+        $relatedTableName = (new $relatedModel())->getTableName();
 
+        $query = "SELECT $relatedTableName.* FROM $relatedTableName
+        JOIN $pivotTable ON $relatedTableName.id = $pivotTable.$relatedPivotKey
+        WHERE $pivotTable.$foreignPivotKey = :id";;
 
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['id' => $id]);
 
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-
-
-
-
-
-
-
-
-
-
-
+        return $results;
+    }
 }
