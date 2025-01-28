@@ -1,0 +1,14 @@
+{
+    "name": "youcode/biblio-school",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kardasch Zakaria"
+        }
+    ],
+    "require": {}
+}
