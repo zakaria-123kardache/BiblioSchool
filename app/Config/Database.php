@@ -1,55 +1,57 @@
 <?php
+namespace App\Config;
 
-namespace app\Core ;
+use Dotenv\Dotenv;
 
-use PDO;
-use PDOException;
+class Database
+{
+    private static $instance = null;
+    private $pdo;
 
-class Connexion {
-
-    private static $servername = "localhost"; 
-    private static $username = "root"; 
-    private static $password = ""; 
-    private static $db = "biblioschool";
-    private static $connexion ; 
-    private static $instance ; 
-    public static $counter = 0 ; 
-
-
-    public function __construct()
+    private function __construct($host, $user, $password, $dbname)
     {
-        if (!self::$connexion)
-        {
-            try {
-                self::$connexion = new PDO(
-                    "mysql:host=" . self::$servername . 
-                    ";dbname=" . self::$db . 
-                    ";charset=UTF8",
-                    self::$username,
-                    self::$password
-                );
+        $dsn = 'mysql:host=' . $host . ';dbname=' . $dbname;
+        $options = array(
+            \PDO::ATTR_PERSISTENT => true,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+        );
 
-                self::$connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("connexion failed" . $e->getMessage());
-            }
+        try {
+            $this->pdo = new \PDO($dsn, $user, $password, $options);
+
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int) $e->getCode());
         }
     }
 
     public static function getInstance()
     {
-        if(!self::$instance){
-            self::$instance = new Connexion();
-            self::$counter ++ ; 
+        if (self::$instance === null) {
+            self::$instance = self::createInstanceFromEnv();
         }
-
-        return self::$instance ; 
-    } 
-
-    public function getConnexion ()
-    {
-        return  self::$connexion; 
-       
+        return self::$instance;
     }
 
+    private static function createInstanceFromEnv()
+    {
+        $dotenv = Dotenv::createUnsafeImmutable(__DIR__ . '/../../');
+        $dotenv->load();
+
+        $host = $_ENV['DB_HOST'];
+        $user = $_ENV['DB_USERNAME'];
+        $password = $_ENV['DB_PASSWORD'];
+        $dbname = $_ENV['DB_DATABASE'];
+
+
+        return new self($host, $user, $password, $dbname);
+    }
+
+
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
 }
+
+
+
