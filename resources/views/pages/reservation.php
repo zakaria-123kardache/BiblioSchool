@@ -18,6 +18,8 @@
 
   <body>
 
+  <?php include __DIR__. '/../components/navbar.php' ;?>
+
 
     <!-- book reesrviren  -->
 
@@ -121,6 +123,7 @@
     </section>
 
     <!-- footer -->
+    <?php include __DIR__.'/../components/footer.php' ;?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

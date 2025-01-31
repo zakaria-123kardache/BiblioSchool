@@ -16,6 +16,8 @@
   </head>
   <body>
 
+  <?php include __DIR__. '/../components/navbar.php' ;?>
+
 
     <!-- recherche -->
     <div
@@ -144,7 +146,7 @@
                   <i class="fas fa-bookmark text-muted"></i>
                 </div>
 
-                <a href="reser.html"><button  class="btn btn-success btn-sm">Reserve now</button></a>
+                <a href="/reservation"><button  class="btn btn-success btn-sm">Reserve now</button></a>
                 
               </div>
             </div>
@@ -198,6 +200,9 @@
 
    
     </section>
+
+
+    <?php include __DIR__.'/../components/footer.php' ;?>
 
 
     <script src="../../../public/js/langue.js"></script>

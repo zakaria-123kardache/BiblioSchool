@@ -25,20 +25,20 @@
               <h1>BiblioTech</h1>
             </div>
             <div class="nav-links">
-              <a href="./home.html" class="nav-link active">
+              <a href="/" class="nav-link active">
                 <i class="fas fa-home"></i>
                 <span>Accueil</span>
               </a>
-              <a href="./Catalogue.html" class="nav-link">
+              <a href="/catalogue" class="nav-link">
                 <i class="fas fa-book"></i>
                 <span>Catalogue</span>
               </a>
 
-              <a href="#" class="nav-link">
+              <a href="/aboutus" class="nav-link">
                 <i class="fas fa-info-circle"></i>
                 <span>About Us</span>
               </a>
-              <a href="#" class="nav-link">
+              <a href="/contactus" class="nav-link">
                 <i class="fas fa-info-circle"></i>
                 <span>Contact US</span>
               </a>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="language-option" data-lang="ar">
                   <img
-                    src="https://flagcdn.com/w40/sa.png"
+                    src="https://flagcdn.com/w320/de.png"
                     alt="Deutsch"
                     class="flag-icon"
                   />
@@ -102,12 +102,12 @@
   
             <!-- btn login signup-->
             <div id="btnloginlogout">
-                <a href="./singup.php">
+                <a href="/signup">
                     <button class="signup-btn">
                         Sign Up
                     </button>
                 </a>
-                <a href="./login.php">
+                <a href="/login">
                     <button class="login-btn">
                         Login
                     </button>

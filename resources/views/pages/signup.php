@@ -115,7 +115,7 @@
           </div>
 
           <p class="login-link">
-            Already have an account? <a href="./login.php">Login here</a>
+            Already have an account? <a href="/login">Login here</a>
           </p>
         </div>
       </div>
