@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'root/router',
+        'name' => 'youcode/biblio-school',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '9564de0a59ae54d1cfe73e2d1841576df92094c6',
+        'reference' => '4cb201a3e5ff207aaff68120307fafaf3c0e1db2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -60,15 +60,6 @@
             'provided' => array(
                 0 => '1.0',
             ),
-        ),
-        'root/router' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '9564de0a59ae54d1cfe73e2d1841576df92094c6',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
             'pretty_version' => 'v3.5.1',
@@ -145,6 +136,15 @@
             'reference' => 'a59a13791077fe3d44f90e7133eb68e7d22eaff2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../vlucas/phpdotenv',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'youcode/biblio-school' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '4cb201a3e5ff207aaff68120307fafaf3c0e1db2',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

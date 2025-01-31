@@ -78,7 +78,7 @@
                 </div>
 
                 <p class="signup-link">
-                    Don't have an account? <a href="./singup.html">Sign up</a>
+                    Don't have an account? <a href="./singup.php">Sign up</a>
                 </p>
             </div>
         </div>

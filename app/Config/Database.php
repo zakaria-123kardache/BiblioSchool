@@ -1,5 +1,5 @@
 <?php
-namespace app\Config;
+namespace App\Config;
 
 use Dotenv\Dotenv;
 
