@@ -1,3 +1,26 @@
+<?php
+
+
+
+// use App\Config\Database;
+
+// require_once __DIR__ . '/../../../app/config/database.php';
+
+// try {
+//     $db = Database::getInstance();
+//     $pdo = $db->getPdo();
+
+//     echo "concted";
+// } catch (PDOException $e) {
+//     echo "dont conectredd" . $e->getMessage();
+// }
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

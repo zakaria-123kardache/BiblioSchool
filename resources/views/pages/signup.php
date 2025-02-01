@@ -39,17 +39,30 @@
           <h2>Create Account</h2>
           <p class="form-subtitle">Start your educational journey today</p>
 
-          <form id="signupForm" onsubmit="return validateForm(event)">
+          <form method="POST" action="/signup" id="signupForm" onsubmit="return validateForm(event)">
             <div class="input-group">
               <div class="input-field">
                 <i class="fas fa-user"></i>
                 <input
                   type="text"
-                  id="fullname"
-                  placeholder="Full Name"
+                  id="firstname"
+                  name="firstname"
+                  placeholder="First Name"
                   required
                 />
-                <span class="error-message" id="fullname-error"></span>
+                <span class="error-message" id="firstname-error"></span>
+              </div>
+
+              <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="lastname"
+                  name="lastname"
+                  placeholder="Last Name"
+                  required
+                />
+                <span class="error-message" id="lastname-error"></span>
               </div>
 
               <div class="input-field">
@@ -58,6 +71,7 @@
                   type="email"
                   id="email"
                   placeholder="Email Address"
+                  name="email"
                   required
                 />
                 <span class="error-message" id="email-error"></span>
@@ -69,6 +83,7 @@
                   type="password"
                   id="password"
                   placeholder="Password"
+                  name="password"
                   required
                 />
                 <i class="fas fa-eye-slash password-toggle"></i>
@@ -93,7 +108,7 @@
               <label for="terms">I agree to the Terms & Conditions</label>
             </div>
 
-            <button type="submit" class="signup-btn">
+            <button type="submit" name="submit" class="signup-btn">
               Sign Up
               <i class="fas fa-arrow-right"></i>
             </button>
